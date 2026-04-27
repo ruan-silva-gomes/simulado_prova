@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SAEP - Almoxarifado</title>
+    <!-- CSS simplificado para memorização rápida -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- TELA DE LOGIN: Aparece ao carregar a página -->
+    <div id="scr-login" class="glass" style="max-width: 400px; margin: 100px auto;">
+        <h2 style="margin-bottom: 20px;">Acesso ao Sistema</h2>
+        <input type="text" id="l-email" placeholder="E-mail">
+        <input type="password" id="l-senha" placeholder="Senha">
+        <button onclick="login()">Entrar</button>
+    </div>
+
+    <!-- ÁREA LOGADA: Fica escondida (hide) até o login ter sucesso -->
+    <div id="scr-app" class="hide">
+        <header>
+            <h2>Almoxarifado - <span id="u-nome"></span></h2>
+            <button onclick="location.reload()" style="width: auto;">Sair</button>
+        </header>
+
+        <!-- MENU DE NAVEGAÇÃO: Alterna entre as telas de Produtos e Estoque -->
+        <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+            <button onclick="mostrarTela('produtos')">Gerenciar Produtos</button>
+            <button onclick="mostrarTela('estoque')">Gestão de Estoque</button>
+        </div>
+
+        <!-- TELA 1: CADASTRO DE PRODUTOS (RF04/05/06) -->
+        <div id="view-produtos" class="glass hide">
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="p-busca" placeholder="Buscar produto..." oninput="carregarProdutos()">
+                <button onclick="abrirModal()" style="width: auto;">+ Novo Produto</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto / Specs</th>
+                        <th>Mínimo</th>
+                        <th>Atual</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-produtos"></tbody>
+            </table>
+        </div>
+
+        <!-- TELA 2: GESTÃO DE ESTOQUE (RF08/09/11) -->
+        <div id="view-estoque" class="glass hide">
+            <div style="display: grid; grid-template-columns: 1fr 350px; gap: 20px;">
+                <!-- Tabela de Status do Estoque -->
+                <div class="glass">
+                    <h3>Status do Estoque (A-Z)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Qtd</th>
+                                <th>Mín</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-estoque"></tbody>
+                    </table>
+                </div>
+                <!-- Formulário de Entrada/Saída -->
+                <div class="glass">
+                    <h3>Registrar Movimento</h3>
+                    <select id="mov-produto-id"></select>
+                    <select id="mov-tipo">
+                        <option value="entrada">Entrada</option>
+                        <option value="saida">Saída</option>
+                    </select>
+                    <input type="number" id="mov-qtd" placeholder="Quantidade">
+                    <input type="datetime-local" id="mov-data" placeholder="Data da Movimentação">
+                    <button onclick="realizarMovimentacao()">Confirmar</button>
+                </div>
+            </div>
+
+            <!-- Tabela de Histórico (RF12) -->
+            <div class="glass" style="margin-top: 20px;">
+                <h3>Histórico de Movimentações</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Produto</th>
+                            <th>Tipo</th>
+                            <th>Qtd</th>
+                            <th>Operador</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-historico"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Formulário Pop-up para Adicionar/Editar Produto -->
+    <div id="modal-produto" class="modal">
+        <div class="glass" style="width: 450px;">
+            <h2 id="modal-titulo">Dados do Produto</h2>
+            <form id="m-form">
+                <input type="hidden" id="m-id">
+                <input type="text" id="m-nome" placeholder="Nome do Produto" required>
+                <input type="number" id="m-min" placeholder="Estoque Mínimo" required>
+                <!-- O estoque inicial só aparece para novos produtos -->
+                <div id="div-atual">
+                    <input type="number" id="m-atual" placeholder="Estoque Inicial">
+                </div>
+                <input type="text" id="m-specs" placeholder="Especificações Técnicas">
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="button" onclick="salvarProduto()">Salvar</button>
+                    <button type="button" onclick="fecharModal()" style="background: #64748b;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script principal com toda a lógica JS -->
+    <script src="index.js"></script>
+</body>
+
+</html>

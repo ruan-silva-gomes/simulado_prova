@@ -1,0 +1,106 @@
+/* VARIÁVEIS: Cores principais para facilitar a troca global */
+:root {
+    --p: #8b5cf6;
+    --bg: #0f172a;
+    --t: #f1f5f9;
+}
+
+/* RESET: Remove margens e define a fonte padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* BODY: Fundo escuro e cor do texto */
+body {
+    background: var(--bg);
+    color: var(--t);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* GLASSMORPHISM: Estilo de "vidro" transparente usado em todos os containers */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* COMPONENTES DE FORMULÁRIO: Estilo comum para inputs, selects e botões */
+input,
+select,
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+
+input,
+select {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+button {
+    background: var(--p);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* HEADER: Espaçamento no topo */
+header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+/* TABELAS: Layout simples e bordas sutis */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* MODAL: Camada que cobre a tela inteira para o formulário pop-up */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+/* CORES DE STATUS: Vermelho para erro/baixo e Verde para sucesso/ok */
+.danger {
+    color: #ef4444;
+}
+
+.success {
+    color: #10b981;
+}
+
+/* UTILITÁRIO: Esconde elementos via JavaScript */
+.hide {
+    display: none;
+}
