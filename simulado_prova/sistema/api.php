@@ -58,6 +58,17 @@ switch ($acao) {
         break;
 
     case 'movimentar':
+        // 0. Verifica se há estoque suficiente para saída
+        if ($dados['tipo'] === 'saida') {
+            $stmt = $conn->prepare("SELECT estoque_atual FROM produtos WHERE id = ?");
+            $stmt->bind_param("i", $dados['produto_id']);
+            $stmt->execute();
+            $prod = $stmt->get_result()->fetch_assoc();
+            if ($prod['estoque_atual'] < $dados['qtd']) {
+                die(json_encode(['erro' => 'Estoque insuficiente para esta saída!']));
+            }
+        }
+
         // 1. Registra a movimentação
         $stmt = $conn->prepare("INSERT INTO movimentacoes (produto_id, usuario_id, tipo, quantidade, data) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("iisss", $dados['produto_id'], $dados['usuario_id'], $dados['tipo'], $dados['qtd'], $dados['data']);

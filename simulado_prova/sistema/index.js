@@ -137,6 +137,10 @@ async function realizarMovimentacao() {
     };
 
     const res = await api('movimentar', dados);
+    if (res.erro) {
+        alert(`❌ ERRO: ${res.erro}`);
+        return;
+    }
     if (res.alerta) {
         alert(`🚨 ALERTA DE ESTOQUE MÍNIMO!\nO estoque caiu para ${res.novo_estoque}.`);
     }
